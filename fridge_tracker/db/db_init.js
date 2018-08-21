@@ -16,21 +16,21 @@ conn.connect(function(err) {
     console.log("+++ Connected to MySQL DB on nhanngx");
 });
 
-conn.query("CREATE DATABASE fridge_tracker", function (err, result) {
+conn.query("CREATE DATABASE IF NOT EXISTS fridge_tracker", function (err, result) {
     if (err) throw err;
     console.log("++ Database created");
 });
 
 conn.query("USE fridge_tracker");
 
-conn.query("CREATE TABLE users( \
+conn.query("CREATE TABLE IF NOT EXISTS users( \
             id int NOT NULL AUTO_INCREMENT PRIMARY KEY, \
             name text NOT NULL )", function (err, result) {
                                         if (err) throw err;
                                         console.log("+ Table 'users' created");
 });
 
-conn.query("CREATE TABLE food_item( \
+conn.query("CREATE TABLE IF NOT EXISTS food_item( \
             id int NOT NULL AUTO_INCREMENT PRIMARY KEY, \
             name text, \
             category text, \
