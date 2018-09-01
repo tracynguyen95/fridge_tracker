@@ -3,4 +3,11 @@ extends layout
 block content
   h1= title
   p Hi #{user}!!
-  p Below is the #{title} :)
+  p Welcome to #{title} :)
+
+    p Here is the content of your fridge:
+
+    ul
+      li  #[strong Food Items:] #{data}
+      li  #[strong Expiring Items:] #{data}
+      li  #[strong Expired Items:] #{data}

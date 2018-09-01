@@ -1,7 +1,23 @@
-var items = require('../database/items');
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "fridge_tracker"
+});
 
 exports.index = function(req, res) {
-    res.send('NOT IMPLEMENTED: Site Home Page');
+    // Count all items in the storage
+    var sql = "SELECT * FROM food_items";
+    con.query(sql, function (err, result, field) {
+      if (err) throw err;
+      console.log("Number of query items:" + result.length);
+    //   con.end(function(err){
+    //     console.log ('Connection Closed');
+    //   });
+      res.render ('items', {title:'My fridge', user: 'Nhung', data: result.length}); 
+    });
 };
 
 // Display list of all itemss.

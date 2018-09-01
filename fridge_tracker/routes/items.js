@@ -5,12 +5,6 @@ var router = express.Router();
 var items_controller = require('../controllers/items');
 var users_controller = require('../controllers/users');
 
-// Render the page layout
-router.get('/', function(req, res, next) {
-    res.render('items', { title: 'List of things in your fridge', user:"Nhung" });
-    next;
-  });
-
 /* GET users listing. */
 router.get('/', items_controller.index);
 // GET request for creating a items. NOTE This must come before routes that display items (uses id).
