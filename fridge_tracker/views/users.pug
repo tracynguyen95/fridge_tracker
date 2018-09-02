@@ -4,3 +4,20 @@ block content
   h1= title
   p Hi #{user}!!
   p Below is the #{title} :)
+  
+  p Here is the content of your fridge:
+
+    table(style='width:100%', border='1')
+      tr
+        th <center>User ID</center>
+        th <center>Name</center>
+        th 
+            button(onclick="location.href = '/users/add'") Add
+      each user in user_list
+        tr
+            td #{user.id}
+            td #{user.name}
+            td button#edit edit
+
+      else
+        p <b>THERE IS NO USER. There is no user. There is no house. Zombies are all that's left. Apocalypse fast approaches. Every man for himself. May your death be swift and your body untainted.</b>

@@ -2,14 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 // Require controller modules.
-var users_controller = require('../controllers/items');
 var users_controller = require('../controllers/users');
 
 // Render the page layout
-router.get('/', function(req, res, next) {
-    res.render('users', { title: 'List of Users', user:"Nhung" });
-    next;
-  });
+router.get('/', users_controller.index);
 
 /* GET users listing. */
 router.get('/', users_controller.index);

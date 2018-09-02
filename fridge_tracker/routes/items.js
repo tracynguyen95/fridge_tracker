@@ -3,7 +3,6 @@ var router = express.Router();
 
 // Require controller modules.
 var items_controller = require('../controllers/items');
-var users_controller = require('../controllers/users');
 
 /* GET users listing. */
 router.get('/', items_controller.index);

@@ -9,18 +9,21 @@ block content
 
     table(style='width:100%', border='1')
       tr
-        th Item Name
-        th Category
-        th Quantity
-        th Location
-        th Expiration
+        th <center>Item Name</center>
+        th <center>Category</center>
+        th <center>Quantity</center>
+        th <center>Location</center>
+        th <center>Expiration</center>
+        th 
+            button(onclick="location.href = '/items/add'") Add
       each item in item_list
         tr
-          td #{item.item_name}
-          td #{item.category}
-          td #{item.quantity} #{item.unit} 
-          td #{item.location}
-          td #{item.expiration}   
+            td #{item.item_name}
+            td #{item.category}
+            td #{item.quantity} #{item.unit} 
+            td #{item.location}
+            td #{item.expiration}
+            td button#edit edit
 
       else
-        li There is no food. 
+        p <b>THERE IS NO FOOD. There is no food. There is no fridge. Everything right is wrong. Apocalypse fast approaches. Every man for himself. May your death be swift and your body untainted.</b>

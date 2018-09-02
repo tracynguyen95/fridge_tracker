@@ -1,4 +1,4 @@
-var mysql = require('mysql');
+var db = require('./db_config');
 
 // TO FIX LATER
 const FOOD_LOCATION = ["Fridge (Upstairs)", 
@@ -8,8 +8,6 @@ const FOOD_LOCATION = ["Fridge (Upstairs)",
                         "Kitchen Cupboard", 
                         "Pantry"];
 
-const FOOD_UNIT = ["kg", 
-                    "g"];
 const FOOD_CATEGORY = ["Protein",
                         "Vegetable",
                         "Fruits",
@@ -18,25 +16,19 @@ const FOOD_CATEGORY = ["Protein",
                         "Snacks",
                         "Condiments",
                         "Others"];
-
-var con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "password",
-  database: "fridge_tracker"
-});
-
-
+                        
+var con = db.getConnection();
 
 exports.index = function(req, res) {
     // Count all items in the storage
     var sql = "SELECT * FROM food_items";
     con.query(sql, function (err, result, field) {
-        if (err) throw err;    
+        if (err) throw err;   
+        
         result = item_map(result);
         console.log(result);
-
-        res.render ('items', {title:'My fridge', user: 'Nhung', item_list: result}); 
+        
+        res.render ('items', {title:'My fridge', user: 'Nhung', item_list: result});
     });
 };
 

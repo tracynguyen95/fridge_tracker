@@ -1,6 +1,17 @@
+var db = require('./db_config');
+
+var con = db.getConnection();
 
 exports.index = function(req, res) {
-    res.send('NOT IMPLEMENTED: Site Home Page');
+    // Count all items in the storage
+    var sql = "SELECT * FROM users";
+    con.query(sql, function (err, result, field) {
+        if (err) throw err;   
+        
+        console.log(result);
+        
+        res.render ('users', {title:'List of users', user: 'Nhung', user_list: result});
+    });
 };
 
 // Display list of all users.
@@ -10,7 +21,7 @@ exports.users_list = function(req, res) {
 
 // Display users create form on GET.
 exports.users_create_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: users create GET');
+    res.render('users_add');
 };
 
 // Handle users create on POST.

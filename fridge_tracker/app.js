@@ -8,6 +8,20 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var itemsRouter = require('./routes/items');
 
+var db = require('./controllers/db_config');
+
+// check and init db if necessary
+db.getConnection().connect(function(err) {
+    if (err) {
+        if (err.errno == 1049) {
+            console.log("db not initialized, calling db creating script.");
+            db.initDb();
+        } else {
+            throw err;
+        }
+    }
+});
+
 var app = express();
 
 // view engine setup
