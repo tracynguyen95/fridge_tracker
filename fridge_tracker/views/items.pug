@@ -7,7 +7,20 @@ block content
 
     p Here is the content of your fridge:
 
-    ul
-      li  #[strong Food Items:] #{data}
-      li  #[strong Expiring Items:] #{data}
-      li  #[strong Expired Items:] #{data}
+    table(style='width:100%', border='1')
+      tr
+        th Item Name
+        th Category
+        th Quantity
+        th Location
+        th Expiration
+      each item in item_list
+        tr
+          td #{item.item_name}
+          td #{item.category}
+          td #{item.quantity} #{item.unit} 
+          td #{item.location}
+          td #{item.expiration}   
+
+      else
+        li There is no food. 

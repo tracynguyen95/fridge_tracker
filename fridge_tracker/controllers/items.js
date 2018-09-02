@@ -1,5 +1,24 @@
 var mysql = require('mysql');
 
+// TO FIX LATER
+const FOOD_LOCATION = ["Fridge (Upstairs)", 
+                        "Freezer (Upstairs)", 
+                        "Fridge (Basement)", 
+                        "Freezer (Basement)", 
+                        "Kitchen Cupboard", 
+                        "Pantry"];
+
+const FOOD_UNIT = ["kg", 
+                    "g"];
+const FOOD_CATEGORY = ["Protein",
+                        "Vegetable",
+                        "Fruits",
+                        "Dairy",
+                        "Grains",
+                        "Snacks",
+                        "Condiments",
+                        "Others"];
+
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -7,16 +26,17 @@ var con = mysql.createConnection({
   database: "fridge_tracker"
 });
 
+
+
 exports.index = function(req, res) {
     // Count all items in the storage
     var sql = "SELECT * FROM food_items";
     con.query(sql, function (err, result, field) {
-      if (err) throw err;
-      console.log("Number of query items:" + result.length);
-    //   con.end(function(err){
-    //     console.log ('Connection Closed');
-    //   });
-      res.render ('items', {title:'My fridge', user: 'Nhung', data: result.length}); 
+        if (err) throw err;    
+        result = item_map(result);
+        console.log(result);
+
+        res.render ('items', {title:'My fridge', user: 'Nhung', item_list: result}); 
     });
 };
 
@@ -58,3 +78,23 @@ exports.items_update_get = function(req, res) {
 exports.items_update_post = function(req, res) {
     res.send('NOT IMPLEMENTED: items update POST');
 };
+
+function item_map(result) {
+    result.forEach(function(re) {
+        if (re.location < FOOD_LOCATION.length) {
+            re.location = FOOD_LOCATION[re.location];
+        }
+        else {
+            re.location = "Invalid";
+        }
+        if (re.category < FOOD_CATEGORY.length) {
+            re.category = FOOD_CATEGORY[re.category];
+        }
+        if (re.unit < FOOD_UNIT.length) {
+            re.unit = FOOD_UNIT[re.unit];
+        }
+        re.expiration = re.expiration.getDate() + "/" + re.expiration.getMonth() + "/" + re.expiration.getFullYear();
+    });
+
+    return result;
+}
