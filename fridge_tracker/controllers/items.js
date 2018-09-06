@@ -1,4 +1,4 @@
-var db = require('./db_config');
+var mysql = require('mysql');
 
 // TO FIX LATER
 const FOOD_LOCATION = ["Fridge (Upstairs)", 
@@ -8,6 +8,8 @@ const FOOD_LOCATION = ["Fridge (Upstairs)",
                         "Kitchen Cupboard", 
                         "Pantry"];
 
+const FOOD_UNIT = ["kg", 
+                    "g"];
 const FOOD_CATEGORY = ["Protein",
                         "Vegetable",
                         "Fruits",
@@ -16,19 +18,24 @@ const FOOD_CATEGORY = ["Protein",
                         "Snacks",
                         "Condiments",
                         "Others"];
-                        
-var con = db.getConnection();
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password",
+  database: "fridge_tracker"
+});
+
+
 
 exports.index = function(req, res) {
     // Count all items in the storage
     var sql = "SELECT * FROM food_items";
     con.query(sql, function (err, result, field) {
-        if (err) throw err;   
-        
+        if (err) throw err;    
         result = item_map(result);
         console.log(result);
-        
-        res.render ('items', {title:'My fridge', user: 'Nhung', item_list: result});
+        res.render ('items', {title:'My fridge', user: 'Nhung', item_list: result}); 
     });
 };
 
@@ -85,7 +92,8 @@ function item_map(result) {
         if (re.unit < FOOD_UNIT.length) {
             re.unit = FOOD_UNIT[re.unit];
         }
-        re.expiration = re.expiration.getDate() + "/" + re.expiration.getMonth() + "/" + re.expiration.getFullYear();
+        re.expiration = re.expiration.getDate() + "/" + re
+        .expiration.getMonth() + "/" + re.expiration.getFullYear();
     });
 
     return result;

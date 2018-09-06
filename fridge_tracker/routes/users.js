@@ -4,9 +4,6 @@ var router = express.Router();
 // Require controller modules.
 var users_controller = require('../controllers/users');
 
-// Render the page layout
-router.get('/', users_controller.index);
-
 /* GET users listing. */
 router.get('/', users_controller.index);
 // GET request for creating a users. NOTE This must come before routes that display users (uses id).
@@ -27,7 +24,5 @@ router.post('/:id/delete', users_controller.users_delete_post);
 // // POST request to update users.
 // router.post('/:id/update', users_controller.users_update_post);
 
-// GET request for list of all users users.
-router.get('/', users_controller.users_list);
 
 module.exports = router;
