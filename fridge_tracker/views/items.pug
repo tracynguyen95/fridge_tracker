@@ -18,12 +18,13 @@ block content
             button(onclick="location.href = '/items/add'") Add
       each item in item_list
         tr
-            td #{item.item_name}
+            td #{item.name}
             td #{item.category}
             td #{item.quantity} #{item.unit} 
             td #{item.location}
             td #{item.expiration}
-            td button#edit edit
+            td 
+              button#edit edit
 
       else
         p <b>THERE IS NO FOOD. There is no food. There is no fridge. Everything right is wrong. Apocalypse fast approaches. Every man for himself. May your death be swift and your body untainted.</b>

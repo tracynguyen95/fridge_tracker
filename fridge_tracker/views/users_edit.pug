@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label Edit #{user.name}:
+      input#name.form-control(type='text', placeholder='First Name' name='name' value=(undefined===user ? '' : user.name))
+    button(type='submit') Finish
+
+  - var url = user.id;
+  button(onclick="location.href = '/users/" + url + "/delete'") Delete
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

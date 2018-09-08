@@ -65,7 +65,7 @@ exports.users_create_post =  [
                         con.query("INSERT INTO users (name) VALUES (?)", [user], function (err, result, field) {
                                 if (err) throw err;   
                                 console.log("1 record inserted, ID: " + result.insertId); 
-                                res.send("User Created, ID" + result.insertId);
+                                res.send("User Created, ID: " + result.insertId);
                              });
 
                     }
@@ -80,20 +80,52 @@ exports.users_create_post =  [
 
 // Display users delete form on GET.
 exports.users_delete_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: users delete GET');
+    var sql = "SELECT * FROM users WHERE id=" + req.params.id + ";";
+    con.query(sql, function (err, result, field) {
+        if (err) throw err;   
+        if (result.length == 0) {
+            console.log ("No user found");
+            res.send ('User does not exist');
+        }
+        else {
+            console.log(result[0].name); 
+            res.render ('users_delete', {title:'Delete User', user: result[0].name});
+        }
+    });
 };
 
 // Handle users delete on POST.
 exports.users_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: users delete POST');
+    var sql = "DELETE FROM users WHERE id=" + req.params.id + ";";
+    con.query(sql, function (err, result, field) {
+        if (err) throw err;   
+        console.log("1 record deleted, ID: " + result.affectedRows); 
+        res.send(result.affectedRows +"User Deleted ");
+    });
 };
 
-// // Display users update form on GET.
-// exports.users_update_get = function(req, res) {
-//     res.send('NOT IMPLEMENTED: users update GET');
-// };
+//Display users update form on GET.
+exports.users_update_get = function(req, res) {
+    var sql = "SELECT * FROM users WHERE id=" + req.params.id + ";";
+    con.query(sql, function (err, result, field) {
+        if (err) throw err;   
+        if (result.length == 0) {
+            console.log ("No user found");
+            res.send ('User does not exist');
+        }
+        else {
+            console.log(result); 
+            res.render ('users_edit', {title:'Edit User', user: result[0]});
+        }
+    });
+};
 
-// // Handle users update on POST.
-// exports.users_update_post = function(req, res) {
-//     res.send('NOT IMPLEMENTED: users update POST');
-// };
+// Handle users update on POST.
+exports.users_update_post = function(req, res) {
+    var sql = "UPDATE users SET name = '" + req.body.name + "' WHERE id=" + req.params.id + ";";
+    con.query(sql, function (err, result, field) {
+        if (err) throw err;   
+        console.log("Updated " + result.affectedRows + " user."); 
+        res.send("Updated " + result.affectedRows + " user.");
+    });
+};

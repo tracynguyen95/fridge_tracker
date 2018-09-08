@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1 #{title}
+
+  form(method='POST' action='')
+    div.form-group
+      label Do you want to delete #{user}:
+    button(type='submit') Yes
+  
+  button(onclick="location.href = '/users'") No
+
+  if errors 
+    ul
+      for error in errors
+        li!= error.msg

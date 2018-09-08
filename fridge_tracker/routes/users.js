@@ -18,11 +18,11 @@ router.get('/:id/delete', users_controller.users_delete_get);
 // POST request to delete users.
 router.post('/:id/delete', users_controller.users_delete_post);
 
-// // GET request to update users.
-// router.get('/:id/update', users_controller.users_update_get);
+// GET request to update users.
+router.get('/:id/edit', users_controller.users_update_get);
 
-// // POST request to update users.
-// router.post('/:id/update', users_controller.users_update_post);
+// POST request to update users.
+router.post('/:id/edit', users_controller.users_update_post);
 
 
 module.exports = router;

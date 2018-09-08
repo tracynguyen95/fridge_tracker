@@ -14,13 +14,12 @@ block content
         th 
             button(onclick="location.href = '/users/create'") Add
       each user in user_list
-        - var url = user.id;
         tr
             td #{user.id}
             td #{user.name}
             td
-              
-              button(onclick="location.href = '/users/:' + url + '/delete'") /users/:#{user.id}/delete
+              - var url = user.id;
+              button(onclick="location.href = '/users/" + url + "/edit'") Edit
 
       else
         p <b>THERE IS NO USER. There is no user. There is no house. Zombies are all that's left. Apocalypse fast approaches. Every man for himself. May your death be swift and your body untainted.</b>
