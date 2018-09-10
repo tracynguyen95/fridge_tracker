@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1 #{title}    
+  p Name: #{item.item_name}
+  p Category: #{item.category}
+  p Quantity #{item.quantity} #{item.unit} 
+  p Location: #{item.location}
+  p Date Bought: #{item.date_bought}
+  p Expiration: #{item.expiration}
+  p User: #{item.user_name}
+
+  - var url = item.item_id;
+  button(onclick="location.href = '/items/" + url + "/edit'") Edit   
+  button(onclick="location.href = '/items/" + url + "/delete'") Delete  

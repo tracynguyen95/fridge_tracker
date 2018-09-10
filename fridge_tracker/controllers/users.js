@@ -42,7 +42,7 @@ exports.users_create_post =  [
             // Extract the validation errors from a request.
             const errors = validationResult(req);
     
-            // Create a genre object with escaped and trimmed data.
+            // Create a user object with escaped and trimmed data.
             var user = req.body.name;
     
     
@@ -53,12 +53,12 @@ exports.users_create_post =  [
             }
             else {
                 // Data from form is valid.
-                // Check if Genre with same name already exists.
+                // Check if User with same name already exists.
                 con.query("SELECT * FROM users WHERE name = ?", [user], function (err, result, field) {
                     if (err) throw err;   
                     console.log('Found users: ' + result.length); 
                     if (result.length > 0) {
-                        // Genre exists, redirect to its detail page.
+                        // User exists, redirect to its detail page.
                         res.send("User already exists.");
                     }
                     else {

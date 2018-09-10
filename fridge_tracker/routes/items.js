@@ -19,15 +19,12 @@ router.get('/:id/delete', items_controller.items_delete_get);
 router.post('/:id/delete', items_controller.items_delete_post);
 
 // GET request to update items.
-router.get('/:id/update', items_controller.items_update_get);
+router.get('/:id/edit', items_controller.items_update_get);
 
 // POST request to update items.
-router.post('/:id/update', items_controller.items_update_post);
+router.post('/:id/edit', items_controller.items_update_post);
 
 // GET request for one items.
 router.get('/:id', items_controller.items_detail);
-
-// GET request for list of all items items.
-router.get('/', items_controller.items_list);
 
 module.exports = router;

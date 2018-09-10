@@ -18,7 +18,9 @@ block content
             button(onclick="location.href = '/items/add'") Add
       each item in item_list
         tr
-            td #{item.name}
+            td 
+              - var url = item.id;
+              a(href='/items/' + url) #{item.name}
             td #{item.category}
             td #{item.quantity} #{item.unit} 
             td #{item.location}

@@ -37,16 +37,23 @@ exports.index = function(req, res) {
         console.log(result);
         res.render ('items', {title:'My fridge', user: 'Nhung', item_list: result}); 
     });
-};
-
-// Display list of all itemss.
-exports.items_list = function(req, res) {
-    res.send('NOT IMPLEMENTED: items list');
-};
+}
 
 // Display detail page for a specific items.
 exports.items_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: items detail: ' + req.params.id);
+    var sql = "SELECT food_items.id AS item_id, food_items.name AS item_name, category, date_bought, location, quantity, unit, expiration, users.name AS user_name FROM food_items INNER JOIN users ON food_items.user_id = users.id WHERE food_items.id=" + req.params.id + ";";
+    con.query(sql, function (err, result, field) {
+        if (err) throw err;   
+        if (result.length == 0) {
+            console.log ("No item found");
+            res.send ('Item does not exist');
+        }
+        else {
+            result = item_map(result);
+            console.log(result); 
+            res.render ('items_detail', {title:'Item Detail', item: result[0]});
+        }
+    });
 };
 // Display items create form on GET.
 exports.items_create_get = function(req, res) {
@@ -92,8 +99,9 @@ function item_map(result) {
         if (re.unit < FOOD_UNIT.length) {
             re.unit = FOOD_UNIT[re.unit];
         }
-        re.expiration = re.expiration.getDate() + "/" + re
-        .expiration.getMonth() + "/" + re.expiration.getFullYear();
+        re.date_bought = re.date_bought.toLocaleDateString();
+
+        re.expiration = re.expiration.toLocaleDateString();
     });
 
     return result;
